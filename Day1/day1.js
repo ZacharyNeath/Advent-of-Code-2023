@@ -1,9 +1,21 @@
 const fs = require('node:fs');
 
 let codes = readFile("Day1/calibration-input.txt");
-let nums = getNums(codes);
-let sum = nums.reduce((partialSum, a) => partialSum + a, 0);
-console.log("SUM: " + sum);
+
+//Part 1
+getCalibrationSum(codes);
+
+//Part 2
+let wordsReplaced = replaceAllCodes(codes);
+getCalibrationSum(wordsReplaced);
+
+
+function getCalibrationSum(codes){
+  let newNums = getNums(codes);
+  let newSum = newNums.reduce((partialSum, a) => partialSum + a, 0);
+  console.log("SUM: " + newSum);
+}
+
 
 function readFile(file) {
   const data = fs.readFileSync(file).toString();
@@ -41,5 +53,30 @@ function getNums(codes){
   });
 
   return nums;
+
+}
+
+function replaceAllCodes(codes){
+  let newCodes = [];
+
+  codes.forEach(element => {
+    newCodes.push(replaceWithDigits(element));
+  });
+
+  return newCodes;
+
+}
+
+function replaceWithDigits(code){
+  let wordsToNum = [{word: "one", replacement: "one1one"}, {word: "two", replacement: "two2two"}, {word: "three", replacement: "three3three"}, {word: "four", replacement: "four4four"},
+                    {word: "five", replacement: "five5five"}, {word: "six", replacement: "six6six"}, {word: "seven", replacement: "seven7seven"}, {word: "eight", replacement: "eight8eight"},
+                    {word: "nine", replacement: "nine9nine"}];
+  let newCode = code;
+
+  wordsToNum.forEach(element => {
+    newCode = newCode.replaceAll(element.word, element.replacement);
+  });
+
+  return newCode;
 
 }
