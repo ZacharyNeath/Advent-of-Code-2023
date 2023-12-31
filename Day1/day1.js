@@ -1,4 +1,4 @@
-const fs = require('node:fs');
+const {readFile} = require("./../common.js");
 
 let codes = readFile("Day1/calibration-input.txt");
 
@@ -14,14 +14,6 @@ function getCalibrationSum(codes){
   let newNums = getNums(codes);
   let newSum = newNums.reduce((partialSum, a) => partialSum + a, 0);
   console.log("SUM: " + newSum);
-}
-
-
-function readFile(file) {
-  const data = fs.readFileSync(file).toString();
-  let lines = data.split("\n");
-
-  return lines;
 }
 
 function firstDigit(data){
